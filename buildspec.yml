@@ -1,0 +1,37 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - echo 🔐 [INSTALL] .pem 파일 다운로드 및 권한 설정
+      - aws s3 cp s3://ldap-ci-secrets/LDAP_KPI.pem LDAP_KPI.pem
+      - chmod 400 LDAP_KPI.pem
+
+  pre_build:
+    commands:
+      - echo ⚙️ [PRE-BUILD] Spring Boot 앱 빌드 및 Docker 로그인
+      - ./gradlew clean build -x test
+      - echo 🔐 ECR 로그인 중...
+      - aws ecr get-login-password --region ap-northeast-2 \
+        | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com
+
+  build:
+    commands:
+      - echo 🐳 [BUILD] Docker 이미지 생성 및 태깅
+      - docker build -t ldap .
+      - docker tag ldap:latest 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
+
+  post_build:
+    commands:
+      - echo 🚀 [POST-BUILD] Docker 이미지 ECR 푸시
+      - docker push 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
+      - echo 📦 [DEPLOY] EC2에 배포 스크립트 전송 및 실행
+      - scp -o StrictHostKeyChecking=no -i LDAP_KPI.pem deploy.sh ubuntu@54.180.31.234:/home/ubuntu/
+      - ssh -o StrictHostKeyChecking=no -i LDAP_KPI.pem ubuntu@54.180.31.234 'chmod +x deploy.sh && ./deploy.sh'
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes
