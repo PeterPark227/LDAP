@@ -29,6 +29,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "JWT 발급 성공"),
             @ApiResponse(responseCode = "401", description = "인증 실패 (ID 또는 비밀번호 오류)")
     })
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         try {
