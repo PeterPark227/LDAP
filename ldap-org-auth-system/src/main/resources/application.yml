@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: ldap
+
+  config:
+    import:
+      - classpath:application-ldap.yml
+
+  datasource:
+    url: jdbc:mysql://3.34.29.70:3306/ldap
+    username: ldap
+    password: qwer1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: /api/v1/docs/swagger
+  paths-to-match:
+    - /**
+
+logging:
+  level:
+    root: DEBUG
+    com.biztechi.ldap: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+  file:
+    name: /home/ubuntu/logs/app.log
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

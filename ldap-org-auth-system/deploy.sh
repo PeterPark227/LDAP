@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "[STEP 1] 기존 컨테이너 종료 및 삭제"
-docker stop ldap || true
-docker rm ldap || true
+docker stop ldap-web || true
+docker rm ldap-web || true
 
 echo "[STEP 2] 기존 이미지 삭제 (옵션)"
 docker rmi 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest || true

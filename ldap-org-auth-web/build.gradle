@@ -1,0 +1,17 @@
+plugins {
+    id 'base'
+}
+
+task npmInstall(type: Exec) {
+    workingDir = file('.')
+    commandLine 'npm', 'install'
+}
+
+task npmRunBuild(type: Exec) {
+    workingDir = file('.')
+    commandLine 'npm', 'run', 'build'
+}
+
+build.dependsOn npmInstall
+npmRunBuild.mustRunAfter npmInstall
+build.dependsOn npmRunBuild

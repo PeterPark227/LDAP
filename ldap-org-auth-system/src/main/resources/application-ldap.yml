@@ -1,0 +1,11 @@
+spring:
+  ldap:
+    url: ldap://3.34.29.70:10389
+    base: dc=ldapgroup,dc=com
+    userDn: cn=admin,dc=ldapgroup,dc=com
+    password: qwer1234
+
+logging:
+  level:
+    org.springframework.ldap: DEBUG
+    org.springframework.security.ldap: DEBUG

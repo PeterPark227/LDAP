@@ -29,8 +29,8 @@ phases:
       - echo 🚀 [POST-BUILD] Docker 이미지 ECR 푸시
       - docker push 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
       - echo 📦 [DEPLOY] EC2에 배포 스크립트 전송 및 실행
-      - scp -o StrictHostKeyChecking=no -i LDAP_KPI.pem deploy.sh ubuntu@54.180.31.234:/home/ubuntu/
-      - ssh -o StrictHostKeyChecking=no -i LDAP_KPI.pem ubuntu@54.180.31.234 'chmod +x deploy.sh && ./deploy.sh'
+      - scp -o StrictHostKeyChecking=no -i LDAP_KPI.pem deploy.sh ubuntu@3.34.29.70:/home/ubuntu/
+      - ssh -o StrictHostKeyChecking=no -i LDAP_KPI.pem ubuntu@3.34.29.70 'chmod +x deploy.sh && ./deploy.sh'
 
 artifacts:
   files:
