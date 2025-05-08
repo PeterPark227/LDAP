@@ -78,13 +78,13 @@ const styles = {
     borderRadius: '8px',
     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
     width: '300px'
   },
   title: {
     marginBottom: '16px',
     fontSize: '24px',
-    textAlign: 'center'
+    textAlign: 'center' as const
   },
   input: {
     marginBottom: '12px',
@@ -106,6 +106,6 @@ const styles = {
     color: 'red',
     fontSize: '14px',
     marginBottom: '10px',
-    textAlign: 'center'
+    textAlign: 'center' as const
   }
 }
