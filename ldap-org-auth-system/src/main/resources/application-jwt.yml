@@ -1,0 +1,4 @@
+spring:
+  jwt:
+    secretKey: my-secret-key
+    expirationMs: 3600000

@@ -4,8 +4,3 @@ spring:
     base: dc=ldapgroup,dc=com
     userDn: cn=admin,dc=ldapgroup,dc=com
     password: qwer1234
-
-logging:
-  level:
-    org.springframework.ldap: DEBUG
-    org.springframework.security.ldap: DEBUG

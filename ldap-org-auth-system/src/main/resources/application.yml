@@ -5,6 +5,7 @@ spring:
   config:
     import:
       - classpath:application-ldap.yml
+      - classpath:application-jwt.yml
 
   datasource:
     url: jdbc:mysql://3.34.29.70:3306/ldap
@@ -16,6 +17,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
 
 springdoc:
   default-consumes-media-type: application/json
