@@ -1,4 +1,4 @@
 spring:
   jwt:
-    secretKey: my-secret-key
-    expirationMs: 3600000
+    secretKey: ${JWT_SECRET_KEY}
+    expirationMs: ${JWT_EXPIRATION_MS}

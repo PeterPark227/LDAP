@@ -4,30 +4,24 @@ phases:
   install:
     runtime-versions:
       java: corretto11
+      nodejs: 18
     commands:
-      - echo 🔐 [INSTALL] .pem 파일 다운로드 및 권한 설정
-      - aws s3 cp s3://ldap-ci-secrets/LDAP_KPI.pem LDAP_KPI.pem
-      - chmod 400 LDAP_KPI.pem
-
+      - echo Installing dependencies...
+      - npm install --prefix ldap-org-auth-web
   pre_build:
     commands:
-      - echo ⚙️ [PRE-BUILD] Spring Boot 앱 빌드 및 Docker 로그인
-      - chmod +x ./gradlew
-      - ./gradlew clean build -x test --stacktrace
-      - echo 🔐 ECR 로그인 중...
-      - aws ecr get-login-password --region ap-northeast-2 \
-        | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com
-
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com)
   build:
     commands:
-      - echo 🐳 [BUILD] Docker 이미지 생성 및 태깅
-      - docker build -t ldap .
-      - docker tag ldap:latest 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
-
+      - echo Build started on `date`
+      - ./gradlew clean build -x test
+      - docker build -t ldap-org-auth-system .
+      - docker tag ldap-org-auth-system:latest 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap-org-auth-system:latest
   post_build:
     commands:
-      - echo 🚀 [POST-BUILD] Docker 이미지 ECR 푸시
-      - docker push 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
+      - echo Pushing the Docker image...
+      - docker push 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap-org-auth-system:latest
       - echo 📦 [DEPLOY] EC2에 배포 스크립트 전송 및 실행
       - scp -o StrictHostKeyChecking=no -i LDAP_KPI.pem deploy.sh ubuntu@3.34.29.70:/home/ubuntu/
       - ssh -o StrictHostKeyChecking=no -i LDAP_KPI.pem ubuntu@3.34.29.70 'chmod +x deploy.sh && ./deploy.sh'
@@ -35,4 +29,3 @@ phases:
 artifacts:
   files:
     - '**/*'
-  discard-paths: yes

@@ -30,11 +30,15 @@ springdoc:
 
 logging:
   level:
-    root: DEBUG
-    com.biztechi.ldap: DEBUG
-    org.springframework.web: DEBUG
-    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    root: info
+    com.biztechi.ldap: info
+    org.springframework.web: info
+    org.springframework.web.filter.CommonsRequestLoggingFilter: info
   file:
     name: /home/ubuntu/logs/app.log
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+server:
+  tomcat:
+    use-apr: false

@@ -1,22 +1,17 @@
 #!/bin/bash
 
-echo "[STEP 1] 기존 컨테이너 종료 및 삭제"
-docker stop ldap-web || true
-docker rm ldap-web || true
+# 1. S3에서 .env 파일 다운로드
+aws s3 cp s3://ldap-ci-secrets/.env /home/ubuntu/.env
 
-echo "[STEP 2] 기존 이미지 삭제 (옵션)"
-docker rmi 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest || true
+# 2. .env 적용 및 컨테이너 재시작
+cd /home/ubuntu/app
+docker pull 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap-org-auth-system:latest
+docker stop ldap-app || true
+docker rm ldap-app || true
 
-echo "[STEP 3] 최신 이미지 풀"
-aws ecr get-login-password --region ap-northeast-2 \
-  | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com
-
-docker pull 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
-
-echo "[STEP 4] 컨테이너 실행"
+# 3. Docker 컨테이너 실행
 docker run -d \
-  --name ldap-web \
-  -p 80:8080 \
-  095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
-
-echo "[완료] Spring Boot 앱이 EC2에서 실행 중입니다!"
+  --name ldap-app \
+  --env-file /home/ubuntu/.env \
+  -p 8080:8080 \
+  095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap-org-auth-system:latest

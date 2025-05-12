@@ -8,7 +8,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem("Authorization")
-    fetch("http://localhost:8080/api/hello", {
+    fetch("${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hello", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
