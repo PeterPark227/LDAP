@@ -18,12 +18,12 @@ phases:
       - chmod +x ./gradlew
       - ./gradlew test
       - ./gradlew build
-      - docker build -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap-org-auth-system:latest .
-      - docker tag ldap-org-auth-system:latest 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap-org-auth-system:latest
+      - docker build -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest .
+      - docker tag ldap:latest 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap-org-auth-system:latest
+      - docker push 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
       - echo 📦 [DEPLOY] EC2에 배포 스크립트 전송 및 실행
       - scp -o StrictHostKeyChecking=no -i LDAP_KPI.pem deploy.sh ubuntu@3.34.29.70:/home/ubuntu/
       - ssh -o StrictHostKeyChecking=no -i LDAP_KPI.pem ubuntu@3.34.29.70 'chmod +x deploy.sh && ./deploy.sh'
