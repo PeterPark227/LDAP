@@ -10,6 +10,9 @@ phases:
       - npm install --prefix ldap-org-auth-web
   pre_build:
     commands:
+      - echo Key 파일 S3에서 다운로드
+      - aws s3 cp s3://ldap-ci-secrets/LDAP_KPI.pem .
+      - chmod 400 LDAP_KPI.pem
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com
   build:
