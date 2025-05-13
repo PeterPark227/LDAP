@@ -18,7 +18,7 @@ phases:
       - chmod +x ./gradlew
       - ./gradlew test
       - ./gradlew build
-      - docker build -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest .
+      - docker build -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest ./ldap-org-auth-system
       - docker tag ldap:latest 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
   post_build:
     commands:

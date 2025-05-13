@@ -13,5 +13,5 @@ docker rm ldap-app || true
 docker run -d \
   --name ldap-app \
   --env-file /home/ubuntu/.env \
-  -p 8080:8080 \
+  -p 80:8080 \
   095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
