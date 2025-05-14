@@ -1,0 +1,9 @@
+.gradle
+build
+Dockerfile
+*.log
+*.pem
+*.env
+*.iml
+.idea/
+.git/
