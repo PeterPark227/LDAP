@@ -17,6 +17,8 @@ phases:
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com
   build:
     commands:
+      - echo "🧹 기존 컨테이너 정리 중..."
+      - docker rm -f ldap-app || true  # ✅ 존재하지 않아도 에러 안 나게 처리
       - echo Build started on `date`
       - chmod +x ./gradlew
       - ./gradlew :ldap-org-auth-system:bootJar
