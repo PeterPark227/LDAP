@@ -18,10 +18,11 @@ phases:
   build:
     commands:
       - echo Build started on `date`
+      - cd ldap-org-auth-system
       - chmod +x ./gradlew
       - ./gradlew test
       - ./gradlew build
-      - docker build -t ldap:latest -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest ./ldap-org-auth-system
+      - docker build -t ldap:latest -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest .
   post_build:
     commands:
       - echo Pushing the Docker image...
