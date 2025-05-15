@@ -19,7 +19,7 @@ phases:
     commands:
       - echo Build started on `date`
       - chmod +x ./gradlew
-      - ./gradlew :ldap-org-auth-system:build
+      - ./gradlew :ldap-org-auth-system:bootJar
       - echo Creating directory if not exists....
       - ls ldap-org-auth-system/build/libs
       - docker build -f ldap-org-auth-system/Dockerfile -t ldap:latest -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest .
