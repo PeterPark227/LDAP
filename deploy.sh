@@ -20,6 +20,8 @@ docker pull 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
 echo "🚀 컨테이너 실행"
 docker run -d \
   --name ldap-app \
+  --memory="512m" \
+  --cpus="0.5" \
   --env-file /home/ubuntu/.env \
   -p 8080:8080 \
   095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
