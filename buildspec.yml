@@ -17,12 +17,11 @@ phases:
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com
   build:
     commands:
-      - echo Creating directory if not exists....
-      - mkdir -p build/libs
       - echo Build started on `date`
       - chmod +x ./gradlew
-      - ./gradlew test
-      - ./gradlew build
+      - ./gradlew :ldap-org-auth-system:build
+      - echo Creating directory if not exists....
+      - ls ldap-org-auth-system/build/libs
       - cd ldap-org-auth-system
       - docker build -t ldap:latest -t 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest .
   post_build:
