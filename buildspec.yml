@@ -17,6 +17,8 @@ phases:
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com
   build:
     commands:
+      - echo Creating directory if not exists....
+      - mkdir -p build/libs
       - echo Build started on `date`
       - chmod +x ./gradlew
       - ./gradlew test
@@ -26,6 +28,7 @@ phases:
   post_build:
     commands:
       - echo Pushing the Docker image...
+      - docker images
       - docker push 095215751727.dkr.ecr.ap-northeast-2.amazonaws.com/ldap:latest
       - echo 📦 [DEPLOY] EC2에 배포 스크립트 전송 및 실행
       - scp -o StrictHostKeyChecking=no -i LDAP_KPI.pem deploy.sh ubuntu@3.34.29.70:/home/ubuntu/
