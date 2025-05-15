@@ -5,8 +5,9 @@ plugins {
 }
 
 jar {
-	archiveBaseName.set("app") // 이름 고정
-	archiveVersion.set("")     // 버전 제거
+	archiveBaseName.set("app")    // 파일 이름을 app.jar로 고정
+	archiveVersion.set("")        // 버전 제거
+	archiveClassifier.set("")     // plain 제거
 }
 
 group = 'com.biztechi'
