@@ -4,6 +4,11 @@ plugins {
 	id 'java'
 }
 
+jar {
+	archiveBaseName.set("app") // 이름 고정
+	archiveVersion.set("")     // 버전 제거
+}
+
 group = 'com.biztechi'
 version = '0.0.1-SNAPSHOT'
 
