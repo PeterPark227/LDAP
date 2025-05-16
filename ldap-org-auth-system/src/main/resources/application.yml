@@ -7,18 +7,6 @@ spring:
       - classpath:application-ldap.yml
       - classpath:application-jwt.yml
 
-  datasource:
-    url: jdbc:mysql://3.34.29.70:3306/ldap
-    username: ldap
-    password: qwer1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-
 springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
@@ -38,9 +26,3 @@ logging:
     name: /home/ubuntu/logs/app.log
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-
-server:
-  port: 8080       # ? EC2? Docker?? ???? ??
-  address: 0.0.0.0  # ? ???? ?? ???? ???
-  tomcat:
-    use-apr: false
